@@ -1,17 +1,16 @@
+import 'reflect-metadata';
 import { dirname, importx } from '@discordx/importer';
+import { CustomItents as CustomIntents } from '@magicyan/discord';
+import { Client, DIService, tsyringeDependencyRegistryEngine } from 'discordx';
+import { container } from 'tsyringe';
+
 import { env } from '@lib/env';
-import { IntentsBitField } from 'discord.js';
-import { Client } from 'discordx';
+import { Logger } from './services/Logger';
+
+DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container);
 
 export const bot = new Client({
-    intents: [
-        IntentsBitField.Flags.Guilds,
-        IntentsBitField.Flags.GuildMembers,
-        IntentsBitField.Flags.GuildMessages,
-        IntentsBitField.Flags.GuildMessageReactions,
-        IntentsBitField.Flags.GuildVoiceStates,
-        IntentsBitField.Flags.MessageContent,
-    ],
+    intents: CustomIntents.All,
 
     silent: true,
 
@@ -21,9 +20,10 @@ export const bot = new Client({
 });
 
 async function run() {
-    await importx(`${dirname(import.meta.url)}/**/*.{ts,js}`);
+    const logger = container.resolve(Logger);
+    await importx(`${dirname(import.meta.url)}/{commands,events}/**/*.{ts,js}`);
 
-    await bot.login(env.BOT_TOKEN).then(() => console.log('Bot ON'));
+    await bot.login(env.BOT_TOKEN).then(() => logger.info('Bot ON'));
 }
 
 void run();
