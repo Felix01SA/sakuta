@@ -16,7 +16,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@lib/*":["src/lib/*"]
+      "@lib/*":["src/lib/*"],
+      "@services": ["src/services"]
     }
   },
   "exclude": ["build", "node_modules"]
