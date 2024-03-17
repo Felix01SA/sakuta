@@ -1,16 +1,16 @@
-import { BaseCommand } from '@lib/bases/BaseCommand';
 import { Category } from '@discordx/utilities';
-import { Discord, Slash } from 'discordx';
-import { CommandInteraction, bold } from 'discord.js';
+import { Client, Discord, Slash } from 'discordx';
+import { CommandInteraction, EmbedBuilder, bold } from 'discord.js';
 
 @Discord()
 @Category('info')
-export class Ping extends BaseCommand {
+export class Ping {
     @Slash({ description: 'Retorna a latência do BOT.' })
-    async ping(interaction: CommandInteraction<'cached'>) {
-        const ping = this.client.ws.ping;
+    async ping(interaction: CommandInteraction<'cached'>, client: Client) {
+        const ping = client.ws.ping;
 
-        const embed = this.embed
+        const embed = new EmbedBuilder()
+            .setColor('DarkGreen')
             .setTitle('Pong! 🏓 ')
             .setDescription(
                 `A latência do servidor é: ${bold(String(ping + 'ms'))}`

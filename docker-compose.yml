@@ -1,0 +1,17 @@
+services:
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink
+    container_name: lavalink
+    restart: unless-stopped
+    volumes:
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml
+    networks:
+      - lavalink
+    expose:
+      - 2333
+    ports:
+      - "2333:2333"
+      
+networks:
+  lavalink:
+    name: lavalink

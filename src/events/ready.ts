@@ -1,14 +1,22 @@
-import { BaseEvent } from '@lib/bases/BaseEvent';
 import { ArgsOf, Discord, Once } from 'discordx';
 
-import { Client, Logger } from '@services';
+import { Client, Logger, Music } from '@services';
 import { ActivityType } from 'discord.js';
+import { inject, injectable } from 'tsyringe';
 
 @Discord()
-export abstract class Ready extends BaseEvent {
+@injectable()
+export class Ready {
+    constructor(
+        @inject(Music) private readonly music: Music,
+        @inject(Logger) private readonly logger: Logger
+    ) {}
+
     @Once()
-    async ready(_: ArgsOf<'ready'>, client: Client) {
+    async ready([event]: ArgsOf<'ready'>, client: Client) {
         await client.initApplicationCommands();
+
+        client.music.init({ ...event.user });
 
         client.user?.setPresence({
             activities: [
@@ -23,10 +31,6 @@ export abstract class Ready extends BaseEvent {
             ],
             status: 'idle',
         });
-
-        client.user?.setAvatar(
-            'https://avatars.githubusercontent.com/u/90576743?v=4'
-        );
 
         this.logger.success('Bot ON!');
     }

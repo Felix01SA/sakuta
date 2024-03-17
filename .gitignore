@@ -9,3 +9,5 @@ pnpm-lock.yaml
 # folders
 build
 node_modules
+
+lavalink/application.yml

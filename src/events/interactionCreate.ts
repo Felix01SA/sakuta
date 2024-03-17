@@ -1,16 +1,13 @@
-import { BaseEvent } from '@lib/bases/BaseEvent';
 import { Client } from '@services';
 import { ArgsOf, Discord, On } from 'discordx';
 
 @Discord()
-export abstract class InteractionCreate extends BaseEvent {
+export abstract class InteractionCreate {
     @On()
     async interactionCreate(
         [interaction]: ArgsOf<'interactionCreate'>,
         client: Client
     ) {
-        if (interaction.user.bot) return;
-
         client.executeInteraction(interaction);
     }
 }

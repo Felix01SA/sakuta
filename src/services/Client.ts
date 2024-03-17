@@ -4,12 +4,13 @@ import {
     CustomItents as CustomIntents,
     CustomPartials,
 } from '@magicyan/discord';
-import { Logger } from '@services';
+import { Logger, Music } from '@services';
 import { env } from '@lib/env';
 
 @singleton()
 export class Client extends XClient {
     private _logger: Logger;
+    public readonly music: Music;
     constructor() {
         super({
             intents: CustomIntents.All,
@@ -18,6 +19,7 @@ export class Client extends XClient {
         });
 
         this._logger = container.resolve(Logger);
+        this.music = new Music(this, this._logger);
     }
 
     public async start() {
