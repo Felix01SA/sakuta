@@ -1,4 +1,5 @@
 import { Category } from '@discordx/utilities';
+import { NodeDisconnected } from '@lib/guards/NodeDisconected';
 import { type Client } from '@services';
 
 import {
@@ -9,11 +10,12 @@ import {
     codeBlock,
     hyperlink,
 } from 'discord.js';
-import { Discord, Slash, SlashChoice, SlashOption } from 'discordx';
+import { Discord, Guard, Slash, SlashChoice, SlashOption } from 'discordx';
 import { SearchPlatform } from 'lavalink-client/dist/types';
 
 @Discord()
 @Category('music')
+@Guard(NodeDisconnected)
 export class Play {
     @Slash({ description: 'Vamo curtir uma música?' })
     async play(
