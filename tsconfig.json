@@ -1,24 +1,26 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "outDir": "build",
-    "rootDir": "src",
-    "strict": true,
-    "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "outDir": "build",
+        "rootDir": "src",
+        "strict": true,
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
 
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": false,
 
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
 
-    "baseUrl": ".",
-    "paths": {
-      "@lib/*":["src/lib/*"],
-      "@services": ["src/services"]
-    }
-  },
-  "exclude": ["build", "node_modules"]
+        "baseUrl": ".",
+        "paths": {
+            "@lib/*": ["src/lib/*"],
+            "@services": ["src/services"]
+        },
+        "esModuleInterop": true
+    },
+    "exclude": ["build", "node_modules"],
+    "include": ["src"]
 }

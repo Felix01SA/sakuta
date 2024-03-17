@@ -1,25 +1,30 @@
-import { Client } from '@services';
 import { CommandInteraction } from 'discord.js';
-import { GuardFunction } from 'discordx';
-import { container } from 'tsyringe';
+import { IGuard } from 'discordx';
 
-export const NodeDisconnected: GuardFunction<CommandInteraction> = async (
-    args,
+export const NodeDisconnected: IGuard<CommandInteraction> = async (
+    interaction,
     client,
     next,
     data
 ) => {
-    const exClient = container.resolve(Client);
+    const music = client.music;
+    if (!music.initiated) {
+        music.init({ ...client.user! });
 
-    const node = Array.from(exClient.music.nodeManager.nodes.values());
+        return interaction.reply({
+            content: 'Sistema de musica não inicializado.',
+            ephemeral: true,
+        });
+    }
+    const node = Array.from(music.nodeManager.nodes.values())[0];
+    if (!node.connected) {
+        node.connect();
 
-    if (node[0].connected) await next();
+        return interaction.reply({
+            content: 'Não conectado ao provedor de musicas.',
+            ephemeral: true,
+        });
+    }
 
-    args.reply({
-        content:
-            'Ocorreu um error ao conectar-se ao provedor de música...\nTente novamente.',
-        ephemeral: true,
-    });
-
-    node[0].connect();
+    await next();
 };
