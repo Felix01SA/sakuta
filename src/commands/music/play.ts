@@ -1,5 +1,5 @@
 import { Category } from '@discordx/utilities';
-import { NodeDisconnected } from '@lib/guards/NodeDisconected';
+import { NodeDisconnected } from '@lib/guards/NodeDisconnected';
 import { type Client } from '@services';
 
 import {
