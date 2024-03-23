@@ -1,20 +1,25 @@
 import { Category } from '@discordx/utilities';
-import { ChannelVerifications } from '@lib/guards/ChannelVerifications';
-import { NodeDisconnected } from '@lib/guards/NodeDisconnected';
-import { Client } from '@services';
+import { Discord, Guard, Slash, SlashOption } from 'discordx';
+import { inject, injectable } from 'tsyringe';
 import {
     ApplicationCommandOptionChoiceData,
     ApplicationCommandOptionType,
     AutocompleteInteraction,
     CommandInteraction,
 } from 'discord.js';
-import { Discord, Guard, Slash, SlashOption } from 'discordx';
+
+import { ChannelVerifications, NodeDisconnected } from '@lib/guards';
+import { Music } from '@services';
+import { CommandCategory } from '@lib/types/global';
 
 @Discord()
-@Category('music')
-@Guard(NodeDisconnected as any, ChannelVerifications as any)
+@Category(CommandCategory.MUSIC)
+@injectable()
 export class NextCommand {
+    constructor(@inject(Music) private readonly music: Music) {}
+
     @Slash({ description: 'Pula para proxima musica ou uma especifica.' })
+    @Guard(NodeDisconnected, ChannelVerifications)
     async proxima(
         @SlashOption({
             name: 'musica',
@@ -25,12 +30,11 @@ export class NextCommand {
         music: string | undefined,
         interaction:
             | CommandInteraction<'cached'>
-            | AutocompleteInteraction<'cached'>,
-        client: Client
+            | AutocompleteInteraction<'cached'>
     ) {
         const { guildId } = interaction;
 
-        const player = client.music.getPlayer(guildId);
+        const player = this.music.getPlayer(guildId);
 
         if (interaction.isAutocomplete()) {
             const response: ApplicationCommandOptionChoiceData<
@@ -53,13 +57,17 @@ export class NextCommand {
                             value: i.toString(),
                         });
                     }
-                    interaction.respond(response);
+                    interaction.respond(
+                        response.filter((value) =>
+                            value.name.includes(focus.value)
+                        )
+                    );
                 }
             }
         }
 
         if (interaction.isCommand()) {
-            if (player.queue.tracks.length === 0)
+            if (player.queue.tracks.length === 0 || music === 'empty')
                 return interaction.reply({
                     ephemeral: true,
                     content: `Sem musicas a frente.`,

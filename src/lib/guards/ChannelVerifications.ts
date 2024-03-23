@@ -1,23 +1,30 @@
 import { ICategory } from '@discordx/utilities';
+import { CommandCategory } from '@lib/types/global';
+import { Music } from '@services';
 import {
-    ApplicationCommandType,
     AutocompleteInteraction,
     CommandInteraction,
     EmbedBuilder,
 } from 'discord.js';
-import { DApplicationCommand, IGuard, MetadataStorage } from 'discordx';
+import { DApplicationCommand, GuardFunction, MetadataStorage } from 'discordx';
 
-export const ChannelVerifications: IGuard<
+import { container } from 'tsyringe';
+
+export const ChannelVerifications: GuardFunction<
     CommandInteraction | AutocompleteInteraction
 > = async (interaction, client, next) => {
     if (!interaction.inCachedGuild()) return;
 
+    const music = container.resolve(Music);
+
     const { member, guild } = interaction;
-    const player = client.music.getPlayer(guild.id);
+
+    const player = music.getPlayer(guild.id);
 
     const musicCommands = MetadataStorage.instance.applicationCommands
         .filter(
-            (cmd: DApplicationCommand & ICategory) => cmd.category === 'music'
+            (cmd: DApplicationCommand & ICategory) =>
+                cmd.category === CommandCategory.MUSIC
         )
         .map((command) => command.name);
 
@@ -25,11 +32,9 @@ export const ChannelVerifications: IGuard<
         interaction.isAutocomplete() &&
         musicCommands.includes(interaction.commandName)
     ) {
-        if (player) return next();
-        else
-            return interaction.respond([
-                { name: 'Fila vazia.', value: 'empty' },
-            ]);
+        if (player.queue) return next();
+
+        return interaction.respond([{ name: 'Fila vazia.', value: 'empty' }]);
     }
 
     if (!interaction.isCommand()) return;

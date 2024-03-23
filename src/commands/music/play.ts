@@ -1,7 +1,3 @@
-import { Category } from '@discordx/utilities';
-import { NodeDisconnected } from '@lib/guards/NodeDisconnected';
-import { type Client } from '@services';
-
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
@@ -10,21 +6,23 @@ import {
     codeBlock,
     hyperlink,
 } from 'discord.js';
-import {
-    Discord,
-    Guard,
-    GuardFunction,
-    Slash,
-    SlashChoice,
-    SlashOption,
-} from 'discordx';
+import { Discord, Guard, Slash, SlashChoice, SlashOption } from 'discordx';
+import { Category } from '@discordx/utilities';
 import { SearchPlatform } from 'lavalink-client/dist/types';
+import { inject, injectable } from 'tsyringe';
+
+import { NodeDisconnected, ChannelVerifications } from '@lib/guards';
+import { Music } from '@services';
+import { CommandCategory } from '@lib/types/global';
 
 @Discord()
-@Category('music')
-@Guard(NodeDisconnected as any as GuardFunction)
+@Category(CommandCategory.MUSIC)
+@injectable()
 export class Play {
+    constructor(@inject(Music) private readonly music: Music) {}
+
     @Slash({ description: 'Vamo curtir uma música?' })
+    @Guard(NodeDisconnected, ChannelVerifications)
     async play(
         @SlashOption({
             name: 'busca',
@@ -41,8 +39,7 @@ export class Play {
             type: ApplicationCommandOptionType.String,
         })
         engine: SearchPlatform,
-        interaction: CommandInteraction,
-        client: Client
+        interaction: CommandInteraction
     ) {
         if (!interaction.inCachedGuild()) return;
         await interaction.deferReply({ ephemeral: true });
@@ -61,7 +58,7 @@ export class Play {
                 ],
             });
 
-        const player = client.music.createPlayer({
+        const player = this.music.createPlayer({
             guildId: guildId,
             voiceChannelId: member.voice.channelId,
             textChannelId: channelId,

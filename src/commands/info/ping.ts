@@ -1,9 +1,10 @@
 import { Category } from '@discordx/utilities';
 import { Client, Discord, Slash } from 'discordx';
 import { CommandInteraction, EmbedBuilder, bold } from 'discord.js';
+import { CommandCategory } from '@lib/types/global';
 
 @Discord()
-@Category('info')
+@Category(CommandCategory.INFO)
 export class Ping {
     @Slash({ description: 'Retorna a latência do BOT.' })
     async ping(interaction: CommandInteraction<'cached'>, client: Client) {

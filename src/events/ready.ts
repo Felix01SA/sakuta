@@ -16,21 +16,7 @@ export class Ready {
     async ready([event]: ArgsOf<'ready'>, client: Client) {
         await client.initApplicationCommands();
 
-        client.music.init({ ...event.user });
-
-        client.user?.setPresence({
-            activities: [
-                {
-                    name: 'Testes',
-                    type: ActivityType.Custom,
-                },
-                {
-                    name: 'Desenvolvimento',
-                    type: ActivityType.Watching,
-                },
-            ],
-            status: 'idle',
-        });
+        this.music.init({ ...event.user });
 
         this.logger.success('Bot ON!');
     }

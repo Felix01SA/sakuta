@@ -10,12 +10,13 @@ import { Music } from './services/Music';
 async function run() {
     DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container);
 
+    const logger = container.resolve(Logger);
+
     const client = new Client();
+    const music = new Music(client, logger);
 
     container.registerInstance(Client, client);
-    container.registerSingleton(Client);
-    container.registerSingleton(Logger);
-    container.registerSingleton(Music);
+    container.registerInstance(Music, music);
 
     await importx(`${dirname(import.meta.url)}/{commands,events}/**/*.{ts,js}`);
 

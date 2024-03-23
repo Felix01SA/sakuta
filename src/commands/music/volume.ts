@@ -1,14 +1,20 @@
 import { Category } from '@discordx/utilities';
-import { NodeDisconnected } from '@lib/guards/NodeDisconnected';
-import { Client } from '@services';
 import { ApplicationCommandOptionType, CommandInteraction } from 'discord.js';
 import { Discord, Guard, GuardFunction, Slash, SlashOption } from 'discordx';
+import { inject, injectable } from 'tsyringe';
+
+import { NodeDisconnected, ChannelVerifications } from '@lib/guards';
+import { Music } from '@services';
+import { CommandCategory } from '@lib/types/global';
 
 @Discord()
-@Category('music')
-@Guard(NodeDisconnected as any as GuardFunction)
+@Category(CommandCategory.MUSIC)
+@injectable()
 export class Volume {
+    constructor(@inject(Music) private readonly music: Music) {}
+
     @Slash({ description: 'Ajuste de volume.' })
+    @Guard(NodeDisconnected, ChannelVerifications)
     async volume(
         @SlashOption({
             name: 'porcentagem',
@@ -19,11 +25,10 @@ export class Volume {
             maxValue: 200,
         })
         vol: number,
-        interaction: CommandInteraction,
-        client: Client
+        interaction: CommandInteraction
     ) {
         if (!interaction.inCachedGuild()) return;
-        const player = client.music.getPlayer(interaction.guildId);
+        const player = this.music.getPlayer(interaction.guildId);
         if (!player)
             return interaction.reply({
                 content: 'Não estou conectado.',

@@ -1,16 +1,10 @@
 import { LavalinkManager } from 'lavalink-client';
-import { inject, injectable, singleton } from 'tsyringe';
 import { Client } from './Client';
 import { Logger } from './Logger';
 import { env } from '@lib/env';
 
-@singleton()
-@injectable()
 export class Music extends LavalinkManager {
-    constructor(
-        @inject(Client) private client: Client,
-        @inject(Logger) private readonly logger: Logger
-    ) {
+    constructor(private client: Client, private readonly logger: Logger) {
         super({
             sendToShard(guildId, payload) {
                 const guild = client.guilds.cache.get(guildId);
