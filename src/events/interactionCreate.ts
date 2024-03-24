@@ -1,5 +1,5 @@
-import { Client } from '@services';
-import { ArgsOf, Discord, On } from 'discordx';
+import { Client } from '@services'
+import { ArgsOf, Discord, On } from 'discordx'
 
 @Discord()
 export abstract class InteractionCreate {
@@ -8,6 +8,6 @@ export abstract class InteractionCreate {
         [interaction]: ArgsOf<'interactionCreate'>,
         client: Client
     ) {
-        client.executeInteraction(interaction);
+        client.executeInteraction(interaction)
     }
 }

@@ -1,8 +1,8 @@
-import { ArgsOf, Discord, Once } from 'discordx';
+import { ArgsOf, Discord, Once } from 'discordx'
 
-import { Client, Logger, Music } from '@services';
-import { ActivityType } from 'discord.js';
-import { inject, injectable } from 'tsyringe';
+import { Client, Logger, Music } from '@services'
+import { ActivityType } from 'discord.js'
+import { inject, injectable } from 'tsyringe'
 
 @Discord()
 @injectable()
@@ -14,10 +14,10 @@ export class Ready {
 
     @Once()
     async ready([event]: ArgsOf<'ready'>, client: Client) {
-        await client.initApplicationCommands();
+        await client.initApplicationCommands()
 
-        this.music.init({ ...event.user });
+        this.music.init({ ...event.user })
 
-        this.logger.success('Bot ON!');
+        this.logger.success('Bot ON!')
     }
 }

@@ -1,15 +1,15 @@
-import { LavalinkManager } from 'lavalink-client';
-import { Client } from './Client';
-import { Logger } from './Logger';
-import { env } from '@lib/env';
+import { LavalinkManager } from 'lavalink-client'
+import { Client } from './Client'
+import { Logger } from './Logger'
+import { env } from '@lib/env'
 
 export class Music extends LavalinkManager {
     constructor(private client: Client, private readonly logger: Logger) {
         super({
             sendToShard(guildId, payload) {
-                const guild = client.guilds.cache.get(guildId);
+                const guild = client.guilds.cache.get(guildId)
 
-                if (guild) guild.shard.send(payload);
+                if (guild) guild.shard.send(payload)
             },
             nodes: [
                 {
@@ -20,9 +20,9 @@ export class Music extends LavalinkManager {
                 },
             ],
             client: { id: env.BOT_CLIENT_ID },
-        });
+        })
 
-        client.on('raw', (d) => this.sendRawData(d));
+        client.on('raw', (d) => this.sendRawData(d))
 
         this.nodeManager
             .on('error', (node, error) =>
@@ -36,10 +36,10 @@ export class Music extends LavalinkManager {
             )
             .on('reconnecting', (node) =>
                 logger.warn(`Reconectando ao Lavalink.`)
-            );
+            )
 
         this.on('playerCreate', async (player) => {
-            if (!player.connected) await player.connect();
-        });
+            if (!player.connected) await player.connect()
+        })
     }
 }

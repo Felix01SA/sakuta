@@ -1,11 +1,11 @@
-import { Category } from '@discordx/utilities';
-import { ApplicationCommandOptionType, CommandInteraction } from 'discord.js';
-import { Discord, Guard, GuardFunction, Slash, SlashOption } from 'discordx';
-import { inject, injectable } from 'tsyringe';
+import { Category } from '@discordx/utilities'
+import { ApplicationCommandOptionType, CommandInteraction } from 'discord.js'
+import { Discord, Guard, GuardFunction, Slash, SlashOption } from 'discordx'
+import { inject, injectable } from 'tsyringe'
 
-import { NodeDisconnected, ChannelVerifications } from '@lib/guards';
-import { Music } from '@services';
-import { CommandCategory } from '@lib/types/global';
+import { NodeDisconnected, ChannelVerifications } from '@lib/guards'
+import { Music } from '@services'
+import { CommandCategory } from '@lib/types/global'
 
 @Discord()
 @Category(CommandCategory.MUSIC)
@@ -27,13 +27,13 @@ export class Volume {
         vol: number,
         interaction: CommandInteraction
     ) {
-        if (!interaction.inCachedGuild()) return;
-        const player = this.music.getPlayer(interaction.guildId);
+        if (!interaction.inCachedGuild()) return
+        const player = this.music.getPlayer(interaction.guildId)
         if (!player)
             return interaction.reply({
                 content: 'Não estou conectado.',
                 ephemeral: true,
-            });
+            })
         if (
             !interaction.member.voice.channelId ||
             interaction.member.voice.channelId !== player.voiceChannelId
@@ -41,19 +41,19 @@ export class Volume {
             return interaction.reply({
                 content: 'Entre no meu canal de voz.',
                 ephemeral: true,
-            });
+            })
 
         if (!player.queue.current)
             return interaction.reply({
                 content: 'Não estou tocando nada agora.',
                 ephemeral: true,
-            });
+            })
 
-        await player.setVolume(vol);
+        await player.setVolume(vol)
 
         interaction.reply({
             content: `Volume alterado para: ${player.volume}%`,
             ephemeral: true,
-        });
+        })
     }
 }

@@ -1,11 +1,11 @@
-import signale from 'signale';
-import { singleton } from 'tsyringe';
+import signale from 'signale'
+import { singleton } from 'tsyringe'
 
-const { Signale } = signale;
+const { Signale } = signale
 
 @singleton()
 export class Logger extends Signale {
     constructor() {
-        super({ config: { displayTimestamp: true } });
+        super({ config: { displayTimestamp: true } })
     }
 }

@@ -5,15 +5,15 @@ import {
     bold,
     codeBlock,
     hyperlink,
-} from 'discord.js';
-import { Discord, Guard, Slash, SlashChoice, SlashOption } from 'discordx';
-import { Category } from '@discordx/utilities';
-import { SearchPlatform } from 'lavalink-client/dist/types';
-import { inject, injectable } from 'tsyringe';
+} from 'discord.js'
+import { Discord, Guard, Slash, SlashChoice, SlashOption } from 'discordx'
+import { Category } from '@discordx/utilities'
+import { SearchPlatform } from 'lavalink-client/dist/types'
+import { inject, injectable } from 'tsyringe'
 
-import { NodeDisconnected, ChannelVerifications } from '@lib/guards';
-import { Music } from '@services';
-import { CommandCategory } from '@lib/types/global';
+import { NodeDisconnected, ChannelVerifications } from '@lib/guards'
+import { Music } from '@services'
+import { CommandCategory } from '@lib/types/global'
 
 @Discord()
 @Category(CommandCategory.MUSIC)
@@ -41,11 +41,11 @@ export class Play {
         engine: SearchPlatform,
         interaction: CommandInteraction
     ) {
-        if (!interaction.inCachedGuild()) return;
-        await interaction.deferReply({ ephemeral: true });
-        const { channelId, member, guildId, user } = interaction;
+        if (!interaction.inCachedGuild()) return
+        await interaction.deferReply({ ephemeral: true })
+        const { channelId, member, guildId, user } = interaction
 
-        const embed = new EmbedBuilder().setColor('Red').setTimestamp();
+        const embed = new EmbedBuilder().setColor('Red').setTimestamp()
 
         if (!member.voice.channelId)
             return interaction.editReply({
@@ -56,23 +56,23 @@ export class Play {
                             `Você precisa entrar num canal de voz para usar esse comando.`
                         ),
                 ],
-            });
+            })
 
         const player = this.music.createPlayer({
             guildId: guildId,
             voiceChannelId: member.voice.channelId,
             textChannelId: channelId,
-        });
+        })
 
         const { loadType, tracks, playlist, exception } = await player.search(
             { query: search, source: engine ?? 'ytm' },
             user.id
-        );
+        )
 
         switch (loadType) {
             case 'track':
             case 'search':
-                await player.queue.add(tracks[0]);
+                await player.queue.add(tracks[0])
                 interaction.editReply({
                     embeds: [
                         embed
@@ -86,11 +86,11 @@ export class Play {
                             .setThumbnail(tracks[0].info.artworkUrl!)
                             .setColor('DarkGreen'),
                     ],
-                });
-                break;
+                })
+                break
 
             case 'playlist':
-                await player.queue.add(tracks);
+                await player.queue.add(tracks)
                 interaction.editReply({
                     embeds: [
                         embed
@@ -99,9 +99,9 @@ export class Play {
                             .setThumbnail(playlist?.thumbnail!)
                             .setColor('DarkGreen'),
                     ],
-                });
+                })
 
-                break;
+                break
             case 'error':
                 // await player.destroy();
 
@@ -116,21 +116,21 @@ export class Play {
                                 )
                             ),
                     ],
-                });
+                })
 
-                break;
+                break
             case 'empty':
                 interaction.editReply({
                     embeds: [
                         embed.setTitle('Não encontrei nada!').setColor('Red'),
                     ],
-                });
-                break;
+                })
+                break
 
             default:
-                break;
+                break
         }
 
-        if (!player.playing && !player.paused) player.play();
+        if (!player.playing && !player.paused) player.play()
     }
 }
