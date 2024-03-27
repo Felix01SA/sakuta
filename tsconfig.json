@@ -19,7 +19,8 @@
             "@lib/*": ["src/lib/*"],
             "@services": ["src/services"]
         },
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "strictPropertyInitialization": false
     },
     "exclude": ["build", "node_modules"],
     "include": ["src"]

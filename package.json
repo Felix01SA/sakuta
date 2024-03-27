@@ -10,9 +10,17 @@
         "watch": "node --watch --env-file=.env --import=tsx src/main.ts "
     },
     "dependencies": {
+        "@datorama/akita": "^8.0.1",
         "@discordx/importer": "^1.3.0",
         "@discordx/utilities": "^6.2.0",
         "@magicyan/discord": "^1.0.22",
+        "@tsed/common": "^7.67.0",
+        "@tsed/core": "^7.67.0",
+        "@tsed/di": "^7.67.0",
+        "@tsed/exceptions": "^7.67.0",
+        "@tsed/platform-express": "^7.67.0",
+        "cookie-parser": "^1.4.6",
+        "discord-oauth2": "^2.12.1",
         "discord.js": "^14.14.1",
         "discordx": "^11.9.0",
         "lavalink-client": "^2.1.4",
@@ -23,6 +31,7 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
+        "@types/cookie-parser": "^1.4.7",
         "@types/node": "^20.10.5",
         "@types/signale": "^1.4.7"
     },
