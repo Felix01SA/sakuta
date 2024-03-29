@@ -1,16 +1,9 @@
-import pkg from '@datorama/akita'
-import { injectable, singleton } from 'tsyringe'
+import { Store as RXStore } from 'rxeta'
+import { singleton } from 'tsyringe'
 
 interface IStore {
     verifiedTokens: any[]
 }
 
-const { Store: AkitaStore, StoreConfig } = pkg
-
-@StoreConfig({ name: 'store' })
 @singleton()
-export class Store extends AkitaStore<IStore> {
-    constructor() {
-        super({ verifiedTokens: [] })
-    }
-}
+export class Store extends RXStore<IStore> {}

@@ -1,14 +1,15 @@
-import { PlatformApplication, Configuration } from '@tsed/common'
+import { Configuration, PlatformApplication } from '@tsed/common'
 import { Inject } from '@tsed/di'
-import { join } from 'path'
 import { PlatformExpress } from '@tsed/platform-express'
-import { inject, singleton, InjectionToken, container } from 'tsyringe'
 import cookie from 'cookie-parser'
-import { Logger } from './Logger'
-import controllers from '../api/controllers'
+import { join } from 'path'
 import { LoggerMiddleware } from 'src/api/middlewares/LoggerMiddleware'
+import { InjectionToken, container, inject, singleton } from 'tsyringe'
+import controllers from '../api/controllers'
+import { Logger } from './Logger'
+import { dirname } from '@discordx/importer'
 
-const rootDir = join(import.meta.url, '..', '..')
+const rootDir = join(dirname(import.meta.url), '..', '..')
 
 @Configuration({
     rootDir,

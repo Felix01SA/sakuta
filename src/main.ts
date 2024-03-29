@@ -1,10 +1,8 @@
 import 'reflect-metadata'
-
 import { dirname, importx } from '@discordx/importer'
+import { Client, Logger, Music, Server } from '@services'
 import { DIService, tsyringeDependencyRegistryEngine } from 'discordx'
 import { container } from 'tsyringe'
-
-import { Client, Logger, Server, Music } from '@services'
 
 async function run() {
     DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container)

@@ -1,4 +1,3 @@
-import { AuthController } from './AuthController'
 import { BotStatus } from './BotStatus'
 
-export default [BotStatus, AuthController] as const
+export default [BotStatus] as const

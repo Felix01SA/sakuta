@@ -22,7 +22,7 @@ export class AuthMiddleware implements MiddlewareMethods {
             throw new BadRequest('Token não informado.')
         }
 
-        if (store.getValue().verifiedTokens.includes(token)) return next()
+        if (store.get('verifiedTokens').includes(token)) return next()
 
         try {
             const user = await discordOAuth.getUser(token)
@@ -30,14 +30,12 @@ export class AuthMiddleware implements MiddlewareMethods {
                 throw new Unauthorized('Token invalido.')
             }
 
-            store.update(({ verifiedTokens }) => {
-                return { verifiedTokens: [...verifiedTokens, token] }
-            })
+            store.update('verifiedTokens', (tokens) => [...tokens, token])
 
             setTimeout(() => {
-                store.update(({ verifiedTokens }) => ({
-                    verifiedTokens: verifiedTokens.filter((t) => t !== token),
-                }))
+                store.update('verifiedTokens', (tokens) =>
+                    tokens.filter((t) => t !== token)
+                )
             }, 1000 * 60 * 60 * 24 * 7)
 
             return next()

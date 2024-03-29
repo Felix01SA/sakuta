@@ -62,6 +62,7 @@ export class Play {
             guildId: guildId,
             voiceChannelId: member.voice.channelId,
             textChannelId: channelId,
+            selfDeaf: false,
         })
 
         const { loadType, tracks, playlist, exception } = await player.search(
@@ -103,7 +104,7 @@ export class Play {
 
                 break
             case 'error':
-                // await player.destroy();
+                await player.destroy()
 
                 interaction.editReply({
                     embeds: [
