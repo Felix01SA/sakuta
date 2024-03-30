@@ -28,14 +28,17 @@ export const NodeDisconnected: GuardFunction<
                 break
         }
     }
-    const node = Array.from(music.nodeManager.nodes.values())[0]
-    if (!node.connected) {
-        node.connect()
+    const node = Array.from(music.nodeManager.nodes.values())
 
+    node.forEach((node) => {
+        node.connect()
+    })
+
+    if (!node.map((node) => node.connected).includes(true)) {
         switch (interaction.type) {
             case InteractionType.ApplicationCommand:
                 return interaction.reply({
-                    content: 'Sistema de musica não inicializado.',
+                    content: 'Erro ao conectar-se ao sistema de musica.',
                     ephemeral: true,
                 })
 

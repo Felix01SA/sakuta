@@ -1,27 +1,33 @@
 import 'dotenv/config'
 import { z } from 'zod'
 
-const schema = z.object({
-    BOT_TOKEN: z.string({
-        required_error: 'Sem o token o bot não roda filho...',
-    }),
+const lavalinkSchema = z.object({
+    host: z.string(),
+    port: z.number(),
+    password: z.string(),
+    secure: z.boolean(),
+    id: z.string().optional()
+})
+
+const envSchema = z.object({
+    BOT_TOKEN: z.string(),
     BOT_CLIENT_ID: z.string(),
     BOT_CLIENT_SECRET: z.string(),
     //Lavalink
-    LAVALINK_HOST: z.string(),
-    LAVALINK_PORT: z.string().transform((val) => parseInt(val)),
-    LAVALINK_PASSWORD: z.string(),
-    LAVALINK_SECURE: z.string().transform((val) => val === 'true'),
+    LAVALINK: z.string().transform(val => z.array(lavalinkSchema).parse(JSON.parse(val)))
 })
 
-export const env = schema.parse(process.env)
 
-type IEnv = z.infer<typeof schema>
+export const env = envSchema.parse(process.env)
+
+
+
+type IEnv = z.infer<typeof envSchema>
 
 declare global {
     namespace NodeJS {
-        interface ProcessEnv extends IEnv {}
+        interface ProcessEnv extends IEnv { }
     }
 }
 
-export {}
+export { }

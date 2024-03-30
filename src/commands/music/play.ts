@@ -73,21 +73,41 @@ export class Play {
         switch (loadType) {
             case 'track':
             case 'search':
-                await player.queue.add(tracks[0])
-                interaction.editReply({
-                    embeds: [
-                        embed
-                            .setTitle('Música adicionada!')
-                            .setDescription(
-                                hyperlink(
-                                    tracks[0].info.title,
-                                    tracks[0].info.uri!
+                if (
+                    player.queue.tracks.includes(tracks[0]) ||
+                    player.queue.current?.info.title === tracks[0].info.title
+                ) {
+                    interaction.editReply({
+                        embeds: [
+                            embed
+                                .setTitle('Música já tá na fila.')
+                                .setDescription(
+                                    hyperlink(
+                                        tracks[0].info.title,
+                                        tracks[0].info.uri!
+                                    )
                                 )
-                            )
-                            .setThumbnail(tracks[0].info.artworkUrl!)
-                            .setColor('DarkGreen'),
-                    ],
-                })
+                                .setThumbnail(tracks[0].info.artworkUrl!)
+                                .setColor('DarkRed'),
+                        ],
+                    })
+                } else {
+                    await player.queue.add(tracks[0])
+                    interaction.editReply({
+                        embeds: [
+                            embed
+                                .setTitle('Música adicionada!')
+                                .setDescription(
+                                    hyperlink(
+                                        tracks[0].info.title,
+                                        tracks[0].info.uri!
+                                    )
+                                )
+                                .setThumbnail(tracks[0].info.artworkUrl!)
+                                .setColor('DarkGreen'),
+                        ],
+                    })
+                }
                 break
 
             case 'playlist':
