@@ -10,6 +10,7 @@ pnpm-lock.yaml
 build
 dist
 node_modules
-lavalink
 
-lavalink/application.yml
+# discloud exec file
+discloud.config
+index.js
