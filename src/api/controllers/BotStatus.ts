@@ -1,4 +1,5 @@
-import { Client, Music } from '@services'
+import { Music } from '@services'
+import { Client } from 'discordx'
 import { Controller, Get, Inject, UseBefore } from '@tsed/common'
 import { AuthMiddleware } from '../middlewares/AuthMiddleware'
 
