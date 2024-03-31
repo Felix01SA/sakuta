@@ -4,7 +4,7 @@ import {
     LavalinkNodeOptions,
     Player,
 } from 'lavalink-client'
-import { Client } from './Client'
+import { Client } from 'discordx'
 import { Logger } from './Logger'
 import { env } from '@lib/env'
 import { findChannel, findMessage, brBuilder } from '@magicyan/discord'

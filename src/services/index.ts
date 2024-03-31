@@ -1,4 +1,3 @@
-export * from './Client'
 export * from './Cron'
 export * from './Logger'
 export * from './Music'

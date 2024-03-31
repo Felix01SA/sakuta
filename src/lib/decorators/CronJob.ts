@@ -2,9 +2,9 @@ import { CronJob as Job } from 'cron'
 import { isValidCron } from 'cron-validator'
 import { InjectionToken, container } from 'tsyringe'
 
-export function CronJob(cronExprecion: string, jobName?: string) {
-    if (!isValidCron(cronExprecion, { alias: true, seconds: true })) {
-        throw new Error(`Expreção cron invalida: ${cronExprecion}`)
+export function CronJob(cronExpression: string, jobName?: string) {
+    if (!isValidCron(cronExpression, { alias: true, seconds: true })) {
+        throw new Error(`Expreção cron invalida: ${cronExpression}`)
     }
 
     return (
@@ -22,7 +22,7 @@ export function CronJob(cronExprecion: string, jobName?: string) {
         }
 
         const job = new Job(
-            cronExprecion,
+            cronExpression,
             descriptor.value,
             null,
             false,

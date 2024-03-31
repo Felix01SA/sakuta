@@ -1,6 +1,7 @@
 import { CronJob } from '@lib/decorators/CronJob'
-import { Client, Cron, Logger, Music } from '@services'
+import { Cron, Logger, Music } from '@services'
 import { ActivityType } from 'discord.js'
+import { Client } from 'discordx'
 import { ArgsOf, Discord, Once } from 'discordx'
 import { inject, injectable } from 'tsyringe'
 

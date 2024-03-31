@@ -1,8 +1,13 @@
 import 'reflect-metadata'
 import { importx } from '@discordx/importer'
-import { Client, Logger, Music, Server } from '@services'
-import { DIService, tsyringeDependencyRegistryEngine } from 'discordx'
+import { Logger, Music, Server } from '@services'
+import { Client, DIService, tsyringeDependencyRegistryEngine } from 'discordx'
 import { container } from 'tsyringe'
+import {
+    CustomPartials,
+    CustomItents as CustomIntents,
+} from '@magicyan/discord'
+import { env } from '@lib/env'
 
 async function run() {
     DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container)
@@ -10,7 +15,11 @@ async function run() {
     const logger = container.resolve(Logger)
     const server = container.resolve(Server)
 
-    const client = new Client(logger)
+    const client = new Client({
+        intents: CustomIntents.All,
+        partials: CustomPartials.All,
+        silent: true,
+    })
     const music = new Music(client, logger)
 
     container.registerInstance(Client, client)
@@ -18,7 +27,8 @@ async function run() {
 
     await importx(`${import.meta.dirname}/{commands,events}/**/*.{ts,js}`)
 
-    await client.start()
+    logger.await('Iniciando serviços.')
+    await client.login(env.BOT_TOKEN)
     await server.start()
 }
 

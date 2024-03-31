@@ -1,4 +1,4 @@
-import { Client } from '@services'
+import { Client } from 'discordx'
 import { ArgsOf, Discord, On } from 'discordx'
 
 @Discord()
