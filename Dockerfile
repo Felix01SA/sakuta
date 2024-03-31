@@ -2,8 +2,9 @@ FROM node:lts-alpine as dependencies
     WORKDIR /app
     COPY package.json .
     RUN apk add --no-cache --virtual .build-deps alpine-sdk python3 && \
-        npm ci --silent && \
+        npm i --silent && \
         apk del .build-deps
+      
 
 FROM node:lts-alpine as builder
     WORKDIR /app

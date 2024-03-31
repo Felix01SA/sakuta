@@ -1,22 +1,24 @@
 services:
     lavalink:
-        image: ghcr.io/lavalink-devs/lavalink
-        container_name: lavalink
+        image: ghcr.io/lavalink-devs/lavalink:4
+        container_name: Lavalink
         restart: unless-stopped
-        volumes:
-            - ./lavalink/application.yml:/opt/Lavalink/application.yml
         networks:
             - lavalink
         expose:
             - 2333
         ports:
             - '2333:2333'
+        environment:
+            - _JAVA_OPTIONS=-Xmx6G
+        volumes:
+            - ./lavalink/application.yml:/opt/Lavalink/application.yml
 
     bot:
         build:
             context: ./
             dockerfile: ./Dockerfile
-        container_name: Discord Bot and API
+        container_name: Discord-Bot-API
         env_file:
             - .env
         ports:
