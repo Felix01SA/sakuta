@@ -27,19 +27,19 @@ export class Ready {
 
     @CronJob('*/30 * * * * *')
     private changeActivity() {
-        const activites = [
+        const activities = [
             'Testes',
             'Desenvolvimento',
             'Beta',
             'Desenvolvido por Felix01SA',
         ]
 
-        let activityIndex = Math.floor(Math.random() * activites.length)
+        let activityIndex = Math.floor(Math.random() * activities.length)
 
         this.client.user
             ?.setActivity({
                 type: ActivityType.Custom,
-                name: activites[activityIndex],
+                name: activities[activityIndex],
                 url: 'https://github.com/Felix01SA/sakuta.git',
             })
             .set({

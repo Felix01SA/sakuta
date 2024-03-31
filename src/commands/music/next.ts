@@ -8,7 +8,7 @@ import {
     CommandInteraction,
 } from 'discord.js'
 
-import { ChannelVerifications, NodeDisconnected } from '@lib/guards'
+import { MusicGuard } from '@lib/guards'
 import { Music } from '@services'
 import { CommandCategory } from '@lib/types/global'
 
@@ -19,7 +19,7 @@ export class NextCommand {
     constructor(@inject(Music) private readonly music: Music) {}
 
     @Slash({ description: 'Pula para proxima musica ou uma especifica.' })
-    @Guard(NodeDisconnected, ChannelVerifications)
+    @Guard(MusicGuard)
     async proxima(
         @SlashOption({
             name: 'musica',
@@ -48,19 +48,16 @@ export class NextCommand {
                         { name: 'Sem musicas a frente.', value: 'empty' },
                     ])
                 } else {
-                    for (let i = 0; i < 10; i++) {
-                        if (i > player.queue.tracks.length) continue
-                        const track = player.queue.tracks[i]
-
+                    player.queue.tracks.forEach((track, i) =>
                         response.push({
                             name: track.info.title,
                             value: i.toString(),
                         })
-                    }
+                    )
                     interaction.respond(
-                        response.filter((value) =>
-                            value.name.includes(focus.value)
-                        )
+                        response
+                            .filter((value) => value.name.includes(focus.value))
+                            .slice(0, 11)
                     )
                 }
             }

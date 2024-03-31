@@ -99,11 +99,11 @@ export class Music extends LavalinkManager {
                                 messageId: message.id,
                                 oldMessageId: data.find(
                                     (val) => val.guildId === player.guildId
-                                )?.oldMessageId!,
+                                )?.messageId!,
                             },
                         ]
                     })
-                }, 2000)
+                }, 5000)
             })
             .on('trackStuck', (player, track, payload) => {
                 logger.warn('Track stuck', payload.type)
@@ -128,7 +128,7 @@ export class Music extends LavalinkManager {
                 message.edit({ embeds: [embed] })
             })
             .on('trackError', (player, track, payload) => {
-                logger.warn('Track error', payload.exception)
+                logger.warn('Track error:', payload.exception?.message)
             })
             .on('trackEnd', (player, track, payload) => {
                 const channel = findChannel(
@@ -223,3 +223,5 @@ function formatTime(ms: number) {
 
     return `${minutes}:${seconds}`
 }
+
+function getVoiceChannel() {}

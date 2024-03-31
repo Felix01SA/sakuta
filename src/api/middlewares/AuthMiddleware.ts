@@ -1,4 +1,3 @@
-import { discordOAuth } from '@lib/discord-oauth2'
 import { Logger, Store } from '@services'
 import { Context, Middleware, MiddlewareMethods, Next } from '@tsed/common'
 import { Unauthorized, BadRequest } from '@tsed/exceptions'
@@ -25,7 +24,14 @@ export class AuthMiddleware implements MiddlewareMethods {
         if (store.get('verifiedTokens').includes(token)) return next()
 
         try {
-            const user = await discordOAuth.getUser(token)
+            const response = await fetch('https://discord.com/api/users/@me', {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            })
+
+            const user = await response.json()
+
             if (!user.id) {
                 throw new Unauthorized('Token invalido.')
             }

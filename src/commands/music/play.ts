@@ -11,7 +11,7 @@ import { Category } from '@discordx/utilities'
 import { SearchPlatform } from 'lavalink-client/dist/types'
 import { inject, injectable } from 'tsyringe'
 
-import { NodeDisconnected, ChannelVerifications } from '@lib/guards'
+import { NodeDisconnected, ChannelVerifications, MusicGuard } from '@lib/guards'
 import { Music } from '@services'
 import { CommandCategory } from '@lib/types/global'
 
@@ -22,7 +22,7 @@ export class Play {
     constructor(@inject(Music) private readonly music: Music) {}
 
     @Slash({ description: 'Vamo curtir uma música?' })
-    @Guard(NodeDisconnected, ChannelVerifications)
+    @Guard(MusicGuard)
     async play(
         @SlashOption({
             name: 'busca',
@@ -39,34 +39,22 @@ export class Play {
             type: ApplicationCommandOptionType.String,
         })
         engine: SearchPlatform,
-        interaction: CommandInteraction
+        interaction: CommandInteraction<'cached'>
     ) {
-        if (!interaction.inCachedGuild()) return
         await interaction.deferReply({ ephemeral: true })
         const { channelId, member, guildId, user } = interaction
 
         const embed = new EmbedBuilder().setColor('Red').setTimestamp()
 
-        if (!member.voice.channelId)
-            return interaction.editReply({
-                embeds: [
-                    embed
-                        .setTitle('Como você vai me ouvir?')
-                        .setDescription(
-                            `Você precisa entrar num canal de voz para usar esse comando.`
-                        ),
-                ],
-            })
-
         const player = this.music.createPlayer({
             guildId: guildId,
-            voiceChannelId: member.voice.channelId,
+            voiceChannelId: member.voice.channelId!,
             textChannelId: channelId,
             selfDeaf: false,
         })
 
         const { loadType, tracks, playlist, exception } = await player.search(
-            { query: search, source: engine ?? 'ytm' },
+            { query: search, source: engine ?? 'spotify' },
             user.id
         )
 

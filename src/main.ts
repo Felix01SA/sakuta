@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { dirname, importx } from '@discordx/importer'
+import { importx } from '@discordx/importer'
 import { Client, Logger, Music, Server } from '@services'
 import { DIService, tsyringeDependencyRegistryEngine } from 'discordx'
 import { container } from 'tsyringe'
@@ -16,7 +16,7 @@ async function run() {
     container.registerInstance(Client, client)
     container.registerInstance(Music, music)
 
-    await importx(`${dirname(import.meta.url)}/{commands,events}/**/*.{ts,js}`)
+    await importx(`${import.meta.dirname}/{commands,events}/**/*.{ts,js}`)
 
     await client.start()
     await server.start()
