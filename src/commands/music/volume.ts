@@ -3,7 +3,7 @@ import { ApplicationCommandOptionType, CommandInteraction } from 'discord.js'
 import { Discord, Guard, GuardFunction, Slash, SlashOption } from 'discordx'
 import { inject, injectable } from 'tsyringe'
 
-import { NodeDisconnected, ChannelVerifications } from '@lib/guards'
+import { MusicGuard } from '@lib/guards'
 import { Music } from '@services'
 import { CommandCategory } from '@lib/types/global'
 
@@ -14,7 +14,7 @@ export class Volume {
     constructor(@inject(Music) private readonly music: Music) {}
 
     @Slash({ description: 'Ajuste de volume.' })
-    @Guard(NodeDisconnected, ChannelVerifications)
+    @Guard(MusicGuard)
     async volume(
         @SlashOption({
             name: 'porcentagem',
