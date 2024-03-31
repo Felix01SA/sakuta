@@ -12,7 +12,7 @@ export class Ping {
 
         const embed = new EmbedBuilder()
             .setColor('DarkGreen')
-            .setTitle('Pong! 🏓 ')
+            .setTitle('Pong! 🏓')
             .setDescription(
                 `A latência do servidor é: ${bold(String(ping + 'ms'))}`
             )

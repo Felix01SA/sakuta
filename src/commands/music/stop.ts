@@ -1,8 +1,9 @@
-import { MusicGuard } from '@lib/guards'
-import { Music } from '@services'
 import { CommandInteraction } from 'discord.js'
 import { Discord, Guard, Slash } from 'discordx'
 import { inject, injectable } from 'tsyringe'
+
+import { Music } from '@services'
+import { MusicGuard } from '@lib/guards'
 
 @Discord()
 @injectable()

@@ -47,7 +47,7 @@ export class AuthMiddleware implements MiddlewareMethods {
             return next()
         } catch (err) {
             logger.error(err)
-            throw new Unauthorized('Invalid Token')
+            throw new Unauthorized('Token Invalido.')
         }
     }
 }

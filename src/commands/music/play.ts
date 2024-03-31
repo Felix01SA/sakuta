@@ -11,8 +11,8 @@ import { Category } from '@discordx/utilities'
 import { SearchPlatform } from 'lavalink-client/dist/types'
 import { inject, injectable } from 'tsyringe'
 
-import { MusicGuard } from '@lib/guards'
 import { Music } from '@services'
+import { MusicGuard } from '@lib/guards'
 import { CommandCategory } from '@lib/types/global'
 
 @Discord()

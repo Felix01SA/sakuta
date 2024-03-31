@@ -3,8 +3,8 @@ import { ApplicationCommandOptionType, CommandInteraction } from 'discord.js'
 import { Discord, Guard, GuardFunction, Slash, SlashOption } from 'discordx'
 import { inject, injectable } from 'tsyringe'
 
-import { MusicGuard } from '@lib/guards'
 import { Music } from '@services'
+import { MusicGuard } from '@lib/guards'
 import { CommandCategory } from '@lib/types/global'
 
 @Discord()
@@ -29,25 +29,6 @@ export class Volume {
     ) {
         if (!interaction.inCachedGuild()) return
         const player = this.music.getPlayer(interaction.guildId)
-        if (!player)
-            return interaction.reply({
-                content: 'Não estou conectado.',
-                ephemeral: true,
-            })
-        if (
-            !interaction.member.voice.channelId ||
-            interaction.member.voice.channelId !== player.voiceChannelId
-        )
-            return interaction.reply({
-                content: 'Entre no meu canal de voz.',
-                ephemeral: true,
-            })
-
-        if (!player.queue.current)
-            return interaction.reply({
-                content: 'Não estou tocando nada agora.',
-                ephemeral: true,
-            })
 
         await player.setVolume(vol)
 

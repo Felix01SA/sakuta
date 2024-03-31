@@ -15,7 +15,7 @@ export const MusicGuard: GuardFunction<
     const embed = new EmbedBuilder()
         .setColor('Red')
         .setTimestamp()
-        .setTitle('Ops... :confused:.')
+        .setTitle('Ops... 😖.')
 
     // Lavalink não iniciado
     if (!music.initiated) {

@@ -8,8 +8,8 @@ import {
     CommandInteraction,
 } from 'discord.js'
 
-import { MusicGuard } from '@lib/guards'
 import { Music } from '@services'
+import { MusicGuard } from '@lib/guards'
 import { CommandCategory } from '@lib/types/global'
 
 @Discord()
