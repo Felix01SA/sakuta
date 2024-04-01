@@ -51,8 +51,7 @@
         "shelljs": "^0.8.5",
         "tsc-alias": "^1.8.8",
         "tsx": "^4.7.1",
-        "typescript": "^5.4.3",
-        "vitest": "^1.4.0"
+        "typescript": "^5.4.3"
     },
     "imports": {
         "@lib/*": "./lib/*",
