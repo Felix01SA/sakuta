@@ -1,5 +1,6 @@
 import { CronJob } from '@lib/decorators/CronJob'
-import { Cron, Logger, Music } from '@services'
+import { syncAllGuilds } from '@lib/functions/sync'
+import { Cron, Database, Logger, Music } from '@services'
 import { ActivityType } from 'discord.js'
 import { Client } from 'discordx'
 import { ArgsOf, Discord, Once } from 'discordx'
@@ -9,6 +10,7 @@ import { inject, injectable } from 'tsyringe'
 @injectable()
 export class Ready {
     constructor(
+        @inject(Database) private readonly database: Database,
         @inject(Music) private readonly music: Music,
         @inject(Logger) private readonly logger: Logger,
         @inject(Cron) private readonly cron: Cron,
@@ -20,6 +22,8 @@ export class Ready {
         await client.initApplicationCommands()
 
         this.music.init({ ...event.user })
+
+        await syncAllGuilds(client)
 
         this.cron.startAllJobs()
 

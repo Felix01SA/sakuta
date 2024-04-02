@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { importx } from '@discordx/importer'
-import { Logger, Music, Server } from '@services'
+import { Database, Logger, Music, Server } from '@services'
 import { Client, DIService, tsyringeDependencyRegistryEngine } from 'discordx'
 import { container } from 'tsyringe'
 import {
@@ -14,12 +14,14 @@ async function run() {
 
     const logger = container.resolve(Logger)
     const server = container.resolve(Server)
+    const database = container.resolve(Database)
 
     const client = new Client({
         intents: CustomIntents.All,
         partials: CustomPartials.All,
         silent: true,
     })
+
     const music = new Music(client, logger)
 
     container.registerInstance(Client, client)
@@ -29,6 +31,7 @@ async function run() {
 
     logger.await('Iniciando serviços.')
     await client.login(env.BOT_TOKEN)
+    await database.init()
     await server.start()
 }
 

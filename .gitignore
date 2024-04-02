@@ -5,6 +5,7 @@
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
+database/database.sql
 
 # folders
 build
