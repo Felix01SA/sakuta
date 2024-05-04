@@ -8,7 +8,6 @@ pnpm-lock.yaml
 database/database.sql
 
 # folders
-build
 dist
 node_modules
 lavalink
