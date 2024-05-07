@@ -26,7 +26,5 @@
     },
     "exclude": ["dist", "node_modules"],
     "include": ["src"],
-    "tsc-alias": {
-        "resolveFullPaths": true
-    }
+    
 }
