@@ -20,11 +20,9 @@
             "@services": ["./src/services"],
             "@database/*": ["./src/database/*"]
         },
-        
         "esModuleInterop": true,
         "strictPropertyInitialization": false,
         "types": ["node"]
-
     },
     "exclude": ["dist", "node_modules"],
     "include": ["src"],
