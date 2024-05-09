@@ -30,6 +30,7 @@ async function run() {
     await importx(`${import.meta.dirname}/{commands,events}/**/*.{ts,js}`)
 
     logger.await('Iniciando serviços.')
+    
     await client.login(env.BOT_TOKEN)
     await database.init()
     await server.start()
