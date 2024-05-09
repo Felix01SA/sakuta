@@ -6,6 +6,7 @@ import { CommandCategory } from '@lib/types/global'
 @Discord()
 @Category(CommandCategory.INFO)
 export class Ping {
+    
     @Slash({ description: 'Retorna a latência do BOT.' })
     async ping(interaction: CommandInteraction<'cached'>, client: Client) {
         const ping = client.ws.ping
