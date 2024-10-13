@@ -1,6 +1,6 @@
-import { Client } from "discordx";
 import { importx } from "@discordx/importer";
 import { GatewayIntentBits } from "discord.js";
+import { Client } from "discordx";
 
 const importPattern = `${__dirname}/events/**/*.{js,ts}`;
 
