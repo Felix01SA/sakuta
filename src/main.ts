@@ -6,7 +6,7 @@ import { GatewayIntentBits } from "discord.js";
 import { Client, DIService, tsyringeDependencyRegistryEngine } from "discordx";
 import { container } from "tsyringe";
 
-const importPattern = `${__dirname}/events/**/*.{js,ts}`;
+const importPattern = `${__dirname}/{events,commands}/**/*.{js,ts}`;
 
 async function main(): Promise<void> {
   DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container);
