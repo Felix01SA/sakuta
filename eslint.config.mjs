@@ -8,5 +8,5 @@ export default [
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  perfectionist.configs["recommended-natural"],
+  perfectionist.configs["recommended-alphabetical"],
 ];
