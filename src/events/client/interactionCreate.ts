@@ -8,7 +8,7 @@ import { Logger } from "../../services/logger";
 export class InteractionCreateEvent {
   constructor(@inject(Logger) private readonly logger: Logger) {}
 
-  @On()
+  @On({ event: "interactionCreate" })
   async interactionCreate(
     [interaction]: ArgsOf<"interactionCreate">,
     client: Client,
