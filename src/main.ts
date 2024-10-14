@@ -6,6 +6,8 @@ import { GatewayIntentBits } from "discord.js";
 import { Client, DIService, tsyringeDependencyRegistryEngine } from "discordx";
 import { container } from "tsyringe";
 
+import { Lavalink } from "./services/lavalink";
+
 const importPattern = `${__dirname}/{events,commands}/**/*.{js,ts}`;
 
 async function main(): Promise<void> {
@@ -18,7 +20,10 @@ async function main(): Promise<void> {
     silent: true,
   });
 
+  const lavalink = new Lavalink(client);
+
   container.registerInstance(Client, client);
+  container.registerInstance(Lavalink, lavalink);
 
   await importx(importPattern);
 
