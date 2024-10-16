@@ -11,3 +11,8 @@
 
 #!.yarn/cache
 .pnp.*
+
+# lavalink
+lavalink/*
+!lavalink/application.exemple.yml
+!lavalink/docker-compose.yaml
