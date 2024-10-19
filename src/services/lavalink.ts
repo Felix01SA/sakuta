@@ -1,5 +1,5 @@
 import { Client } from "discordx";
-import { LavalinkManager } from "lavalink-client";
+import { BotClientOptions, LavalinkManager } from "lavalink-client";
 import { container } from "tsyringe";
 
 import { LavalinkEvent, NodeEvents, PlayerEvents } from "../lib/types/lavalink";
@@ -8,7 +8,7 @@ export class Lavalink extends LavalinkManager {
   private _nodeEvents: LavalinkEvent[] = [];
   private _playerEvents: LavalinkEvent[] = [];
 
-  constructor(client: Client) {
+  constructor(private readonly client: Client) {
     super({
       nodes: [
         {
@@ -25,11 +25,9 @@ export class Lavalink extends LavalinkManager {
       sendToShard: (guildId, payload) =>
         client.guilds.cache.get(guildId)?.shard.send(payload),
     });
-
-    client.on("raw", (data) => this.sendRawData(data));
   }
 
-  loadEvents() {
+  private loadEvents(): void {
     this._nodeEvents.forEach((event) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const clazz: any = container.resolve(event.target.constructor as any);
@@ -40,7 +38,7 @@ export class Lavalink extends LavalinkManager {
       );
     });
 
-    this._playerEvents.forEach(event => {
+    this._playerEvents.forEach((event) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const clazz: any = container.resolve(event.target.constructor as any);
 
@@ -48,10 +46,17 @@ export class Lavalink extends LavalinkManager {
       this.on(event.event as keyof PlayerEvents, (...args: any[]) =>
         clazz[event.propertyKey](args),
       );
-    })
+    });
   }
 
-  registerEvent(event: LavalinkEvent, eventType: "node" | "player") {
+  async init(clientData: BotClientOptions): Promise<LavalinkManager> {
+    this.loadEvents();
+    this.client.on("raw", (data) => this.sendRawData(data));
+
+    return await super.init(clientData);
+  }
+
+  registerEvent(event: LavalinkEvent, eventType: "node" | "player"): void {
     if (eventType === "player") {
       this._playerEvents.push(event);
     } else {
