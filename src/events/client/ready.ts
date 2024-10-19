@@ -15,7 +15,6 @@ export class ReadyEvent {
   async ready([readyClient]: ArgsOf<"ready">, client: Client) {
     await client.initApplicationCommands();
     await this.lavalink.init({ ...readyClient.user });
-    this.lavalink.loadEvents();
     this.logger.success("Bot running!");
   }
 }
