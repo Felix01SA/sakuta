@@ -6,6 +6,7 @@ import { GatewayIntentBits } from "discord.js";
 import { Client, DIService, tsyringeDependencyRegistryEngine } from "discordx";
 import { container } from "tsyringe";
 
+import { env } from "./lib/environment";
 import { Lavalink } from "./services/lavalink";
 
 const importPattern = `${__dirname}/{events,commands}/**/*.{js,ts}`;
@@ -27,7 +28,7 @@ async function main(): Promise<void> {
 
   await importx(importPattern);
 
-  await client.login(process.env.BOT_TOKEN!);
+  await client.login(env.BOT_TOKEN!);
 }
 
 void main();

@@ -16,3 +16,7 @@
 lavalink/*
 !lavalink/application.exemple.yml
 !lavalink/docker-compose.yaml
+
+# environment variables
+.env*
+!.env.exemple
