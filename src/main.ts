@@ -1,10 +1,9 @@
 import "reflect-metadata";
 
-// eslint-disable-next-line perfectionist/sort-imports
+import { container } from "tsyringe";
 import { importx } from "@discordx/importer";
 import { GatewayIntentBits } from "discord.js";
 import { Client, DIService, tsyringeDependencyRegistryEngine } from "discordx";
-import { container } from "tsyringe";
 
 import { env } from "./lib/environment";
 import { Lavalink } from "./services/lavalink";

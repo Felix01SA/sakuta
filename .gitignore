@@ -20,3 +20,6 @@ lavalink/*
 # environment variables
 .env*
 !.env.exemple
+
+# temp files
+src/tmp/*

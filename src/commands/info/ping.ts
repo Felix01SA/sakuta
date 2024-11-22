@@ -1,3 +1,5 @@
+import { Discord, Slash } from "discordx";
+import { inject, injectable } from "tsyringe";
 import {
   bold,
   Colors,
@@ -5,8 +7,6 @@ import {
   EmbedBuilder,
   inlineCode,
 } from "discord.js";
-import { Discord, Slash } from "discordx";
-import { inject, injectable } from "tsyringe";
 
 import { Logger } from "../../services/logger";
 

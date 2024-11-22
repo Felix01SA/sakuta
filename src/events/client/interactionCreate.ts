@@ -1,5 +1,5 @@
-import { ArgsOf, Client, Discord, On } from "discordx";
 import { inject, injectable } from "tsyringe";
+import { ArgsOf, Client, Discord, On } from "discordx";
 
 import { Logger } from "../../services/logger";
 

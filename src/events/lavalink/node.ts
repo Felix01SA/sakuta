@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import { inject, injectable } from "tsyringe";
 
-import { NodeEvent } from "../../lib/decorators/lavalinkEvents";
-import { NodeArgs } from "../../lib/types/lavalink";
 import { Logger } from "../../services/logger";
+import { NodeArgs } from "../../lib/types/lavalink";
+import { NodeEvent } from "../../lib/decorators/lavalinkEvents";
 
 @injectable()
 export class NodeEvents {

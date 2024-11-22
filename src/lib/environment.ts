@@ -1,7 +1,7 @@
+import { z } from "zod";
 import { config } from "dotenv";
 import { globSync } from "glob";
 import { join } from "node:path";
-import { z } from "zod";
 
 const basePath = process.cwd();
 

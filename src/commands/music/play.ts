@@ -1,11 +1,12 @@
-import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
-import { Discord, Guard, Slash, SlashOption } from "discordx";
 import { inject, injectable } from "tsyringe";
+import { Discord, Guard, Slash, SlashOption } from "discordx";
+import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 
-import { NodeConnectedGuard } from "../../lib/guards/nodeConnected";
-import { VoiceChannelGuard } from "../../lib/guards/voiceChannel";
-import { Lavalink } from "../../services/lavalink";
 import { Logger } from "../../services/logger";
+import { Lavalink } from "../../services/lavalink";
+import { VoiceChannelGuard } from "../../lib/guards/voiceChannel";
+import { NodeConnectedGuard } from "../../lib/guards/nodeConnected";
+import { MaintenceModeGuard } from "../../lib/guards/maintenceMode";
 
 @Discord()
 @injectable()
@@ -16,7 +17,7 @@ export class PlayCommand {
   ) {}
 
   @Slash({ description: "Play a song.", name: "play" })
-  @Guard(NodeConnectedGuard, VoiceChannelGuard)
+  @Guard(MaintenceModeGuard, NodeConnectedGuard, VoiceChannelGuard)
   async ping(
     @SlashOption({
       description: "Name or link of your song.",

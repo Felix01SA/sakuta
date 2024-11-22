@@ -1,6 +1,6 @@
 import { Client } from "discordx";
-import { BotClientOptions, LavalinkManager } from "lavalink-client";
 import { container } from "tsyringe";
+import { BotClientOptions, LavalinkManager } from "lavalink-client";
 
 import { LavalinkEvent, NodeEvents, PlayerEvents } from "../lib/types/lavalink";
 

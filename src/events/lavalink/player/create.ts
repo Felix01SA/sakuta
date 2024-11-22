@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
 
-import { PlayerEvent } from "../../../lib/decorators/lavalinkEvents";
 import { PlayerArgs } from "../../../lib/types/lavalink";
+import { PlayerEvent } from "../../../lib/decorators/lavalinkEvents";
 
 @injectable()
 export class PlayerCreateEvent {

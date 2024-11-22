@@ -1,8 +1,8 @@
-import { ArgsOf, Client, Discord, Once } from "discordx";
 import { inject, injectable } from "tsyringe";
+import { ArgsOf, Client, Discord, Once } from "discordx";
 
-import { Lavalink } from "../../services/lavalink";
 import { Logger } from "../../services/logger";
+import { Lavalink } from "../../services/lavalink";
 
 @Discord()
 @injectable()

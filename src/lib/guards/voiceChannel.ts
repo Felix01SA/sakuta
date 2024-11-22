@@ -1,6 +1,6 @@
-import { CommandInteraction, Interaction } from "discord.js";
-import { GuardFunction } from "discordx";
 import { container } from "tsyringe";
+import { GuardFunction } from "discordx";
+import { CommandInteraction, Interaction } from "discord.js";
 
 import { Lavalink } from "../../services/lavalink";
 
