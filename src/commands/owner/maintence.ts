@@ -1,5 +1,12 @@
 import { inject, injectable } from "tsyringe";
-import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
+import {
+  Discord,
+  Guard,
+  Slash,
+  SlashChoice,
+  SlashGroup,
+  SlashOption,
+} from "discordx";
 import {
   ApplicationCommandOptionType,
   Colors,
@@ -8,8 +15,15 @@ import {
 } from "discord.js";
 
 import { BotConfig } from "../../services/BotConfig";
+import { DevsOnlyGuard } from "../../lib/guards/devsOnly";
 
 @Discord()
+@SlashGroup({
+  name: "dev",
+  description: "God mode.",
+})
+@SlashGroup('dev')
+@Guard(DevsOnlyGuard)
 @injectable()
 export class MaintenceCommand {
   constructor(@inject(BotConfig) private readonly botConfig: BotConfig) {}
@@ -17,7 +31,7 @@ export class MaintenceCommand {
   @Slash({ description: "Toggles the maintence mode.", name: "maintence" })
   async toggleMaintanceMode(
     @SlashChoice({
-      name: "on",
+      name: "On",
       value: "true",
       nameLocalizations: { "pt-BR": "Ligado" },
     })
